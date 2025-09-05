@@ -223,23 +223,6 @@ root@node-mon01:~# ceph -s
     pgs:
 ```
 
-**Check cluster hosts**
-```
-root@node-mon01:~# ceph orch host ls --detail
-HOST        ADDR           LABELS  STATUS  VENDOR/MODEL    CPU    RAM    HDD    SSD       NIC  
-node-mon01  172.31.24.155  _admin          Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
-1 hosts in cluster
-```
-
-**Deploying additional monitors**
-
-*https://docs.ceph.com/en/latest/cephadm/services/mon/#deploy-additional-monitors*
-```
-# ceph config set mon public_network *<mon-cidr-network>*
-
-Example:
-root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
-```
 **Check "mon" service placement (count:5) like default 5 mon node**
 ```
 root@node-mon01:~# ceph orch ls
@@ -251,4 +234,30 @@ mgr                             1/2  2m ago     15m  count:2
 mon                             1/5  2m ago     15m  count:5    
 node-exporter  ?:9100           1/1  2m ago     15m  *          
 prometheus     ?:9095           1/1  2m ago     15m  count:1
+```
+
+**Check cluster hosts**
+```
+root@node-mon01:~# ceph orch host ls --detail
+HOST        ADDR           LABELS  STATUS  VENDOR/MODEL    CPU    RAM    HDD    SSD       NIC  
+node-mon01  172.31.24.155  _admin          Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+1 hosts in cluster
+```
+
+**Designating a Particular Subnet for Monitors**
+
+*https://docs.ceph.com/en/latest/cephadm/services/mon/#deploy-additional-monitors*
+```
+# ceph config set mon public_network *<mon-cidr-network>*
+
+Example:
+root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
+```
+
+**Adding Hosts join to cluster**
+```
+# ceph orch host label add *<host>* --labels <label>
+
+Example:
+# 
 ```
