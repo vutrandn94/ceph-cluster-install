@@ -10,11 +10,11 @@
 
 
 ## Lab info (6 servers - 5 mon + osd, 1 osd)
-| Hostname | IP Address | OS | Role | Label | Disk Device Storage Data (50 GB) |
+| Hostname | IP Address | OS | role | Label | Disk Device Storage Data (50 GB) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| node-mon01 | 172.31.24.155  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
-| node-mon02 | 172.31.29.146 | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
-| node-mon03 | 172.31.17.150  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
+| node-mon01 | 172.31.24.155  | Ubuntu 22.04.5 LTS | mon, osd, mgr, cluster-admin | _admin | /dev/xvdb |
+| node-mon02 | 172.31.29.146 | Ubuntu 22.04.5 LTS | mon, osd, mgr, cluster-admin | _admin | /dev/xvdb |
+| node-mon03 | 172.31.17.150  | Ubuntu 22.04.5 LTS | mon, osd, mgr, cluster-admin | _admin | /dev/xvdb |
 | node-mon04 | 172.31.24.21 | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
 | node-mon05 | 172.31.17.124 | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
 | node-osd01  | 172.31.25.57 | Ubuntu 22.04.5 LTS | osd | | /dev/xvdb |
