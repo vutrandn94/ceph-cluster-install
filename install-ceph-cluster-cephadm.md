@@ -268,8 +268,13 @@ root@node-mon01:~# ssh-copy-id -f -i /etc/ceph/ceph.pub root@172.31.25.57
 
 **Adding Hosts join to cluster**
 ```
-# ceph orch host label add *<host>* --labels <label>
+
+# ceph orch host add *<newhost>* [*<ip>*]  (To add host with lable (adding option --labels <label>))
 
 Example:
-# 
+root@node-mon01:~# ceph orch host add node-mon02 172.31.29.146 --labels _admin
+root@node-mon01:~# ceph orch host add node-mon03 172.31.17.150 --labels _admin
+root@node-mon01:~# ceph orch host add node-mon04 172.31.24.21
+root@node-mon01:~# ceph orch host add node-mon05 172.31.17.124
+root@node-mon01:~# ceph orch host add node-osd01 172.31.25.57
 ```
