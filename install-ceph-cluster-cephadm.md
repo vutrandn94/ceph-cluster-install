@@ -30,7 +30,6 @@
 System clock synchronized: yes
               NTP service: active
           RTC in local TZ: no
-
 ```
 ```
 # systemctl status chrony
