@@ -147,3 +147,11 @@ Installing packages ['ceph-common']...
 # ceph --version
 ceph version 19.2.3 (c92aebb279828e9c3c1f5d24613efca272649e62) squid (stable)
 ```
+
+## Bootstrap a new cluster (Perform in node-mon01)
+```
+# cephadm bootstrap --mon-ip <IP server node-mon01>
+
+Example:
+# cephadm bootstrap --mon-ip 172.31.24.155
+```
