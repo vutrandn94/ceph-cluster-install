@@ -35,3 +35,4 @@ root@node-mon01:/home/ubuntu# ceph fs volume ls
     }
 ]
 ```
+![Alt Text](ceph-fs1.png)
