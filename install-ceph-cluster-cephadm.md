@@ -151,7 +151,7 @@ ceph version 19.2.3 (c92aebb279828e9c3c1f5d24613efca272649e62) squid (stable)
 ## Bootstrap a new cluster (Perform in node-mon01)
 **Bootrap mon node**
 > [!NOTE]
-> Save user / password dashboard information to first login
+> **Save user / password dashboard information to first login**
 
 ```
 # cephadm bootstrap --mon-ip <IP server node-mon01>
