@@ -154,7 +154,7 @@ ceph version 19.2.3 (c92aebb279828e9c3c1f5d24613efca272649e62) squid (stable)
 # cephadm bootstrap --mon-ip <IP server node-mon01>
 
 Example:
-# cephadm bootstrap --mon-ip 172.31.24.155
+root@node-mon01:~# cephadm bootstrap --mon-ip 172.31.24.155
 ...
 ...
 ...
@@ -201,4 +201,24 @@ b3b16c68853c  quay.io/prometheus/node-exporter:v1.5.0                           
 1e099f07e85b  quay.io/prometheus/prometheus:v2.43.0                                                      --config.file=/et...  2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-prometheus-node-mon01
 620f9990e553  quay.io/prometheus/alertmanager:v0.25.0                                                    --cluster.listen-...  2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-alertmanager-node-mon01
 3dfc90a39819  quay.io/ceph/ceph-grafana:9.4.7                                                            /bin/bash             2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-grafana-node-mon01
+```
+
+**Check cluster status**
+```
+root@node-mon01:~# ceph -s
+  cluster:
+    id:     b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+    health: HEALTH_WARN
+            OSD count 0 < osd_pool_default_size 3
+ 
+  services:
+    mon: 1 daemons, quorum node-mon01 (age 7m)
+    mgr: node-mon01.wgmdkb(active, since 6m)
+    osd: 0 osds: 0 up, 0 in
+ 
+  data:
+    pools:   0 pools, 0 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:
 ```
