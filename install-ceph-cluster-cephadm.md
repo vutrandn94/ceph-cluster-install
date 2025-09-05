@@ -223,6 +223,14 @@ root@node-mon01:~# ceph -s
     pgs:
 ```
 
+**Check cluster hosts**
+```
+root@node-mon01:~# ceph orch host ls --detail
+HOST        ADDR           LABELS  STATUS  VENDOR/MODEL    CPU    RAM    HDD    SSD       NIC  
+node-mon01  172.31.24.155  _admin          Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+1 hosts in cluster
+```
+
 **Deploying additional monitors**
 
 *https://docs.ceph.com/en/latest/cephadm/services/mon/#deploy-additional-monitors*
