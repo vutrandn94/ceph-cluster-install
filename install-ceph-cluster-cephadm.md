@@ -11,7 +11,7 @@
 
 ## Lab info (3 master, 3 worker)
 | Hostname | IP Address | OS | Role | Label |
-| :--- | :--- | :--- | :--- | :--- | :--- | 
+| :--- | :--- | :--- | :--- | :--- |
 | node-mon01 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin |
 | node-mon02 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin |
 | node-mon03 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin |
