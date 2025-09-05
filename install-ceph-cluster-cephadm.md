@@ -254,9 +254,16 @@ Example:
 root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
 ```
 
-**Copy cluster’s public SSH key in the new host’s root user’s authorized_keys**
+**Copy cluster’s public SSH key in the new host’s root user’s authorized_keys (Copy to all remain nodes)**
 ```
+# ssh-copy-id -f -i /etc/ceph/ceph.pub root@*<new-host>*
 
+Example:
+root@node-mon01:~# ssh-copy-id -f -i /etc/ceph/ceph.pub root@172.31.29.146
+root@node-mon01:~# ssh-copy-id -f -i /etc/ceph/ceph.pub root@172.31.17.150
+root@node-mon01:~# ssh-copy-id -f -i /etc/ceph/ceph.pub root@172.31.24.21
+root@node-mon01:~# ssh-copy-id -f -i /etc/ceph/ceph.pub root@172.31.17.124
+root@node-mon01:~# ssh-copy-id -f -i /etc/ceph/ceph.pub root@172.31.25.57
 ```
 
 **Adding Hosts join to cluster**
