@@ -24,4 +24,14 @@ mon                                         5/5  67s ago    6h    count:5
 node-exporter              ?:9100           6/6  67s ago    6h    *                                 
 osd.all-available-devices                     6  67s ago    106m  *                                 
 prometheus                 ?:9095           1/1  65s ago    6h    count:1
+
+root@node-mon01:/home/ubuntu# ceph fs volume ls
+[
+    {
+        "name": "fs-001"
+    },
+    {
+        "name": "fs-002"
+    }
+]
 ```
