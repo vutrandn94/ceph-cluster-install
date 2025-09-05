@@ -359,6 +359,7 @@ node-osd01  /dev/xvdb  ssd              50.0G  Yes        37s ago
 
 **Consume any available and unused storage device**
 ```
+root@node-mon01:/home/ubuntu# ceph config set mon mon_allow_pool_delete true
 root@node-mon01:/home/ubuntu# ceph orch apply osd --all-available-devices
 Scheduled osd.all-available-devices update...
 
@@ -397,6 +398,13 @@ node-mon03  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileS
 node-mon04  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
 node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
 node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
+```
+
+## Deploy MDS Service - CephFS (Perform in 1 cluster admin node)
+*https://docs.ceph.com/en/latest/cephadm/services/mds/#orchestrator-cli-cephfs*
+```
+root@node-mon01:/home/ubuntu# ceph config set mon mon_allow_pool_delete true
+root@node-mon01:/home/ubuntu# ceph fs volume create mds --placement="*"
 ```
 
 ## Access Ceph Dashboard
