@@ -36,3 +36,13 @@ root@node-mon01:/home/ubuntu# ceph fs volume ls
 ]
 ```
 ![Alt Text](ceph-fs1.png)
+
+## Create file system subvolume and set quota limit size storage
+> [TIP]
+> The --size parameter is actually the number of bytes (<bytes>).
+```
+# ceph fs subvolume create <fs_name> <subvol_name> --size <bytes>
+
+Example:
+root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-001 log --size 5368709120
+```
