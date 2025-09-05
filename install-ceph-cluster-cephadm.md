@@ -278,3 +278,43 @@ root@node-mon01:~# ceph orch host add node-mon04 172.31.24.21
 root@node-mon01:~# ceph orch host add node-mon05 172.31.17.124
 root@node-mon01:~# ceph orch host add node-osd01 172.31.25.57
 ```
+
+**Re-check cluster hosts and verify "mon" service node running**
+```
+root@node-mon01:~# ceph orch host ls --detail
+HOST        ADDR           LABELS  STATUS  VENDOR/MODEL    CPU    RAM    HDD    SSD       NIC  
+node-mon01  172.31.24.155  _admin          Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+node-mon02  172.31.29.146  _admin          Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+node-mon03  172.31.17.150  _admin          Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+node-mon04  172.31.24.21                   Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+node-mon05  172.31.17.124                  Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+node-osd01  172.31.25.57                   Xen (HVM domU)  2C/4T  4 GiB  2/0.0  8/75.5GB  1    
+6 hosts in cluster
+
+root@node-mon01:~# ceph orch ls
+NAME           PORTS        RUNNING  REFRESHED  AGE  PLACEMENT  
+alertmanager   ?:9093,9094      1/1  2m ago     69m  count:1    
+crash                           6/6  6m ago     69m  *          
+grafana        ?:3000           1/1  2m ago     69m  count:1    
+mgr                             2/2  6m ago     69m  count:2    
+mon                             5/5  6m ago     69m  count:5    
+node-exporter  ?:9100           6/6  6m ago     69m  *          
+prometheus     ?:9095           1/1  2m ago     69m  count:1
+
+root@node-mon01:~# ceph -s
+  cluster:
+    id:     b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+    health: HEALTH_WARN
+            OSD count 0 < osd_pool_default_size 3
+ 
+  services:
+    mon: 5 daemons, quorum node-mon01,node-mon02,node-mon03,node-mon04,node-mon05 (age 3m)
+    mgr: node-mon01.wgmdkb(active, since 68m), standbys: node-mon02.mmxtwn
+    osd: 0 osds: 0 up, 0 in
+ 
+  data:
+    pools:   0 pools, 0 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:
+```
