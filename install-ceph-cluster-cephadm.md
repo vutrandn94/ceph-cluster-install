@@ -224,6 +224,7 @@ root@node-mon01:~# ceph -s
 ```
 
 **Deploying additional monitors**
+
 *https://docs.ceph.com/en/latest/cephadm/services/mon/#deploy-additional-monitors*
 ```
 # ceph config set mon public_network *<mon-cidr-network>*
