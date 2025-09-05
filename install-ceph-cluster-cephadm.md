@@ -431,7 +431,7 @@ fcda6cbf07e6  quay.io/ceph/ceph@sha256:a0f373aaaf5a5ca5c4379c09da24c771b8266a09d
 ```
 
 ## Access Ceph Dashboard
-*URL Access: https://<MON_SERVER_IP>:8443*
+**URL Access:** *https://<MON_SERVER_IP>:8443*
 > [!NOTE]
 > **First login with user / password information in step "Bootstrap a new cluster"**
 
