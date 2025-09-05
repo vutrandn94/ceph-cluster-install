@@ -49,3 +49,10 @@ root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 214748
 ```
 ![Alt Text](ceph-fs2.png)
 ![Alt Text](ceph-fs3.png)
+
+## Mount filesystem for client and start storage data
+**Install ceph-common**
+```
+root@ceph-client:/home/ubuntu# apt-get update
+root@ceph-client:/home/ubuntu# apt-get install ceph-common
+```
