@@ -343,3 +343,49 @@ root@node-mon01:/home/ubuntu# ceph mgr services
     "prometheus": "http://172.31.24.155:9283/"
 }
 ```
+
+## Adding Storage (OSD) (Perform in 1 cluster admin node)
+**Check physical disk**
+```
+root@node-mon01:/home/ubuntu# ceph orch device ls
+HOST        PATH       TYPE  DEVICE ID   SIZE  AVAILABLE  REFRESHED  REJECT REASONS  
+node-mon01  /dev/xvdb  ssd              50.0G  Yes        37s ago                    
+node-mon02  /dev/xvdb  ssd              50.0G  Yes        37s ago                    
+node-mon03  /dev/xvdb  ssd              50.0G  Yes        37s ago                    
+node-mon04  /dev/xvdb  ssd              50.0G  Yes        37s ago                    
+node-mon05  /dev/xvdb  ssd              50.0G  Yes        37s ago                    
+node-osd01  /dev/xvdb  ssd              50.0G  Yes        37s ago
+```
+
+**Consume any available and unused storage device**
+```
+root@node-mon01:/home/ubuntu# ceph orch apply osd --all-available-devices
+Scheduled osd.all-available-devices update...
+
+root@node-mon01:/home/ubuntu# ceph osd df
+ID  CLASS  WEIGHT   REWEIGHT  SIZE     RAW USE  DATA     OMAP    META     AVAIL    %USE  VAR   PGS  STATUS
+ 1    ssd  0.04880   1.00000   50 GiB  291 MiB  164 KiB   1 KiB  290 MiB   50 GiB  0.57  1.00    0      up
+ 3    ssd  0.04880   1.00000   50 GiB  291 MiB  616 KiB   1 KiB  290 MiB   50 GiB  0.57  1.00    1      up
+ 5    ssd  0.04880   1.00000   50 GiB  291 MiB  164 KiB   1 KiB  290 MiB   50 GiB  0.57  1.00    0      up
+ 0    ssd  0.04880   1.00000   50 GiB  291 MiB  616 KiB   1 KiB  290 MiB   50 GiB  0.57  1.00    1      up
+ 2    ssd  0.04880   1.00000   50 GiB  291 MiB  616 KiB   1 KiB  290 MiB   50 GiB  0.57  1.00    1      up
+ 4    ssd  0.04880   1.00000   50 GiB  291 MiB  164 KiB   1 KiB  290 MiB   50 GiB  0.57  1.00    0      up
+                       TOTAL  300 GiB  1.7 GiB  2.3 MiB  10 KiB  1.7 GiB  298 GiB  0.57                   
+MIN/MAX VAR: 1.00/1.00  STDDEV: 0
+
+root@node-mon01:/home/ubuntu# ceph -s
+  cluster:
+    id:     b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+    health: HEALTH_OK
+ 
+  services:
+    mon: 5 daemons, quorum node-mon01,node-mon02,node-mon03,node-mon04,node-mon05 (age 3h)
+    mgr: node-mon01.wgmdkb(active, since 4h), standbys: node-mon02.mmxtwn, node-mon03.dssoxi
+    osd: 6 osds: 6 up (since 2m), 6 in (since 3m)
+ 
+  data:
+    pools:   1 pools, 1 pgs
+    objects: 2 objects, 449 KiB
+    usage:   1.7 GiB used, 298 GiB / 300 GiB avail
+    pgs:     1 active+clean
+```
