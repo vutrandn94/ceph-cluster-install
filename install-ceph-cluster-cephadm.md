@@ -100,10 +100,32 @@ Sep 05 02:27:04 node-mon01 podman[3475]: time="2025-09-05T02:27:04Z" level=info 
 Sep 05 02:27:09 node-mon01 systemd[1]: podman.service: Deactivated successfully.
 ```
 
+**Check Python version**
+```
+# python3 -V
+Python 3.10.12
+```
+
 **Install cephadm**
-Check active release version. In current, active release version is "Squid - 19.2.3"
+Check active release version. In current, active release version is "squid - 19.2.3"
 ```
 # CEPH_RELEASE="19.2.3" && curl --silent --remote-name --location https://download.ceph.com/rpm-${CEPH_RELEASE}/el9/noarch/cephadm
 
 # chmod +x cephadm
+
+# ./cephadm install && which cephadm 
+Installing packages ['cephadm']...
+/usr/sbin/cephadm
+```
+
+**Install ceph-common**
+```
+# cephadm add-repo --release squid
+Installing repo GPG key from https://download.ceph.com/keys/release.gpg...
+Installing repo file at /etc/apt/sources.list.d/ceph.list...
+Updating package list...
+Completed adding repo.
+
+# cephadm install ceph-common
+Installing packages ['ceph-common']...
 ```
