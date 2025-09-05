@@ -398,3 +398,8 @@ node-mon04  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileS
 node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
 node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
 ```
+
+## Access Ceph Dashboard
+*URL Access: https://<MON_SERVER_IP>:8443*
+> [!NOTE]
+> **First login with user / password information in step "Bootstrap a new cluster"**
