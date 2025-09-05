@@ -400,6 +400,7 @@ node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileS
 node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
 ```
 ## Deploy MDS daemons (CephFS)
+**Defind and apply MDS daemon
 ```
 root@node-mon01:/home/ubuntu# vi mds-daemon.yaml
 ---
@@ -422,6 +423,11 @@ mon                                         5/5  12s ago    6h   count:5
 node-exporter              ?:9100           6/6  13s ago    6h   *                                 
 osd.all-available-devices                     6  13s ago    94m  *                                 
 prometheus                 ?:9095           1/1  11s ago    6h   count:1
+```
+**Check container mds daemon create on cluster nodes**
+```
+root@node-mon01:/home/ubuntu# podman ps | grep mds.main
+fcda6cbf07e6  quay.io/ceph/ceph@sha256:a0f373aaaf5a5ca5c4379c09da24c771b8266a09dc9e2181f90eacf423d7326f  -n mds.main.node-...  About a minute ago  Up About a minute ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-mds-main-node-mon01-dcftjq
 ```
 
 ## Access Ceph Dashboard
