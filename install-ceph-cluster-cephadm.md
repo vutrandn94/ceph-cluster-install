@@ -333,4 +333,10 @@ mgr                             3/3  3m ago     12s  node-mon01;node-mon02;node-
 mon                             5/5  9m ago     76m  count:5                           
 node-exporter  ?:9100           6/6  9m ago     76m  *                                 
 prometheus     ?:9095           1/1  0s ago     76m  count:1
+
+root@node-mon01:/home/ubuntu# ceph mgr services
+{
+    "dashboard": "https://172.31.24.155:8443/",
+    "prometheus": "http://172.31.24.155:9283/"
+}
 ```
