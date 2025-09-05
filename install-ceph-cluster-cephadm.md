@@ -400,13 +400,6 @@ node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileS
 node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
 ```
 
-## Deploy MDS Service - CephFS (Perform in 1 cluster admin node)
-*https://docs.ceph.com/en/latest/cephadm/services/mds/#orchestrator-cli-cephfs*
-```
-root@node-mon01:/home/ubuntu# ceph config set mon mon_allow_pool_delete true
-root@node-mon01:/home/ubuntu# ceph fs volume create mds --placement="*"
-```
-
 ## Access Ceph Dashboard
 *URL Access: https://<MON_SERVER_IP>:8443*
 > [!NOTE]
