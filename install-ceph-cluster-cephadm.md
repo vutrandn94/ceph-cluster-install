@@ -232,7 +232,7 @@ root@node-mon01:~# ceph -s
 Example:
 root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
 ```
-Check "mon" service placement (count:5) like default 5 mon node
+**Check "mon" service placement (count:5) like default 5 mon node**
 ```
 root@node-mon01:~# ceph orch ls
 NAME           PORTS        RUNNING  REFRESHED  AGE  PLACEMENT  
