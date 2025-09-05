@@ -99,3 +99,11 @@ Sep 05 02:27:04 node-mon01 podman[3475]: time="2025-09-05T02:27:04Z" level=info 
 Sep 05 02:27:04 node-mon01 podman[3475]: time="2025-09-05T02:27:04Z" level=info msg="API service listening on \"/run/podman/podman.sock\""
 Sep 05 02:27:09 node-mon01 systemd[1]: podman.service: Deactivated successfully.
 ```
+
+**Install cephadm**
+Check active release version. In current, active release version is "Squid - 19.2.3"
+```
+# CEPH_RELEASE="19.2.3" && curl --silent --remote-name --location https://download.ceph.com/rpm-${CEPH_RELEASE}/el9/noarch/cephadm
+
+# chmod +x cephadm
+```
