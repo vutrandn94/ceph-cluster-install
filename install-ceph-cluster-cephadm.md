@@ -1,5 +1,5 @@
 # Deploy Ceph cluster with cephadm
-
+*Reference: https://docs.ceph.com/en/latest/cephadm/install/*
 | Requirements |
 | :--- |
 | Python 3 |
