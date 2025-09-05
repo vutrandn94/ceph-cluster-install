@@ -318,3 +318,19 @@ root@node-mon01:~# ceph -s
     usage:   0 B used, 0 B / 0 B avail
     pgs:
 ```
+
+**Reschedule mgr service assing to admin cluster nodes (node-mon01, node-mon02, node-mon03)**
+```
+root@node-mon01:~# ceph orch apply mgr --placement="node-mon01,node-mon02,node-mon03"
+Scheduled mgr update...
+
+root@node-mon01:~# ceph orch ls
+NAME           PORTS        RUNNING  REFRESHED  AGE  PLACEMENT                         
+alertmanager   ?:9093,9094      1/1  0s ago     76m  count:1                           
+crash                           6/6  9m ago     76m  *                                 
+grafana        ?:3000           1/1  0s ago     76m  count:1                           
+mgr                             3/3  3m ago     12s  node-mon01;node-mon02;node-mon03  
+mon                             5/5  9m ago     76m  count:5                           
+node-exporter  ?:9100           6/6  9m ago     76m  *                                 
+prometheus     ?:9095           1/1  0s ago     76m  count:1
+```
