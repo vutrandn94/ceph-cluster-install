@@ -10,7 +10,7 @@
 
 
 ## Lab info (6 servers - 5 mon + osd, 1 osd)
-| Hostname | IP Address | OS | Role | Label | Disk Device Storage Data |
+| Hostname | IP Address | OS | Role | Label | Disk Device Storage Data (50GB) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | node-mon01 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
 | node-mon02 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
