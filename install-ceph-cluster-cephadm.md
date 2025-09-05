@@ -388,4 +388,13 @@ root@node-mon01:/home/ubuntu# ceph -s
     objects: 2 objects, 449 KiB
     usage:   1.7 GiB used, 298 GiB / 300 GiB avail
     pgs:     1 active+clean
+
+root@node-mon01:/home/ubuntu# ceph orch device ls
+HOST        PATH       TYPE  DEVICE ID   SIZE  AVAILABLE  REFRESHED  REJECT REASONS                                                           
+node-mon01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
+node-mon02  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
+node-mon03  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
+node-mon04  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
+node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
+node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
 ```
