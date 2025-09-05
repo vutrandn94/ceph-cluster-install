@@ -232,3 +232,14 @@ root@node-mon01:~# ceph -s
 Example:
 root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
 ```
+```
+root@node-mon01:~# ceph orch ls
+NAME           PORTS        RUNNING  REFRESHED  AGE  PLACEMENT  
+alertmanager   ?:9093,9094      1/1  2m ago     15m  count:1    
+crash                           1/1  2m ago     15m  *          
+grafana        ?:3000           1/1  2m ago     15m  count:1    
+mgr                             1/2  2m ago     15m  count:2    
+mon                             1/5  2m ago     15m  count:5    
+node-exporter  ?:9100           1/1  2m ago     15m  *          
+prometheus     ?:9095           1/1  2m ago     15m  count:1
+```
