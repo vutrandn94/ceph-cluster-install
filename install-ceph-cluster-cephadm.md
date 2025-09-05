@@ -149,26 +149,13 @@ ceph version 19.2.3 (c92aebb279828e9c3c1f5d24613efca272649e62) squid (stable)
 ```
 
 ## Bootstrap a new cluster (Perform in node-mon01)
+**Bootrap mon node**
 ```
 # cephadm bootstrap --mon-ip <IP server node-mon01>
 
 Example:
 # cephadm bootstrap --mon-ip 172.31.24.155
-Verifying podman|docker is present...
-Verifying lvm2 is present...
-Verifying time synchronization is in place...
-Unit chrony.service is enabled and running
-Repeating the final host check...
-podman (/usr/bin/podman) version 3.4.4 is present
-systemctl is present
-lvcreate is present
-Unit chrony.service is enabled and running
-Host looks OK
-Cluster fsid: b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
-Verifying IP 172.31.24.155 port 3300 ...
-Verifying IP 172.31.24.155 port 6789 ...
-Mon IP `172.31.24.155` is in CIDR network `172.31.16.0/20`
-Mon IP `172.31.24.155` is in CIDR network `172.31.16.0/20`
+...
 ...
 ...
 Waiting for mgr epoch 9...
@@ -202,4 +189,16 @@ For more information see:
 	https://docs.ceph.com/docs/master/mgr/telemetry/
 
 Bootstrap complete.
+```
+**Verify Podman container created by cephadm to running ceph component**
+```
+root@node-mon01:~# podman ps
+CONTAINER ID  IMAGE                                                                                      COMMAND               CREATED        STATUS            PORTS       NAMES
+cc0c779b5a32  quay.io/ceph/ceph:v17                                                                      -n mon.node-mon01...  3 minutes ago  Up 3 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-mon-node-mon01
+3199e6a9bd95  quay.io/ceph/ceph:v17                                                                      -n mgr.node-mon01...  3 minutes ago  Up 3 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-mgr-node-mon01-wgmdkb
+0f7b457f5992  quay.io/ceph/ceph@sha256:a0f373aaaf5a5ca5c4379c09da24c771b8266a09dc9e2181f90eacf423d7326f  -n client.crash.n...  3 minutes ago  Up 3 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-crash-node-mon01
+b3b16c68853c  quay.io/prometheus/node-exporter:v1.5.0                                                    --no-collector.ti...  2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-node-exporter-node-mon01
+1e099f07e85b  quay.io/prometheus/prometheus:v2.43.0                                                      --config.file=/et...  2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-prometheus-node-mon01
+620f9990e553  quay.io/prometheus/alertmanager:v0.25.0                                                    --cluster.listen-...  2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-alertmanager-node-mon01
+3dfc90a39819  quay.io/ceph/ceph-grafana:9.4.7                                                            /bin/bash             2 minutes ago  Up 2 minutes ago              ceph-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-grafana-node-mon01
 ```
