@@ -399,6 +399,30 @@ node-mon04  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileS
 node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected  
 node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
 ```
+## Deploy MDS daemons (CephFS)
+```
+root@node-mon01:/home/ubuntu# vi mds-daemon.yaml
+---
+service_type: mds
+service_id: main
+placement:
+  host_pattern: "*"
+```
+```
+root@node-mon01:/home/ubuntu# ceph orch apply -i mds-daemon.yaml
+Scheduled mds.main update...
+
+NAME                       PORTS        RUNNING  REFRESHED  AGE  PLACEMENT                         
+alertmanager               ?:9093,9094      1/1  11s ago    6h   count:1                           
+crash                                       6/6  13s ago    6h   *                                 
+grafana                    ?:3000           1/1  11s ago    6h   count:1                           
+mds.main                                    6/6  13s ago    25s  *                                 
+mgr                                         3/3  12s ago    4h   node-mon01;node-mon02;node-mon03  
+mon                                         5/5  12s ago    6h   count:5                           
+node-exporter              ?:9100           6/6  13s ago    6h   *                                 
+osd.all-available-devices                     6  13s ago    94m  *                                 
+prometheus                 ?:9095           1/1  11s ago    6h   count:1
+```
 
 ## Access Ceph Dashboard
 *URL Access: https://<MON_SERVER_IP>:8443*
