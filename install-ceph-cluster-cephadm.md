@@ -13,11 +13,11 @@
 | Hostname | IP Address | OS | Role | Label | Disk Device Storage Data (50 GB) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | node-mon01 | 172.31.24.155  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
-| node-mon02 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
-| node-mon03 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
-| node-mon04 |  | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
-| node-mon05 |  | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
-| node-osd01  |  | Ubuntu 22.04.5 LTS | osd | | /dev/xvdb |
+| node-mon02 | 172.31.29.146 | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
+| node-mon03 | 172.31.17.150  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
+| node-mon04 | 172.31.24.21 | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
+| node-mon05 | 172.31.17.124 | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
+| node-osd01  | 172.31.25.57 | Ubuntu 22.04.5 LTS | osd | | /dev/xvdb |
 
 ## Install & pre-config on all nodes
 **Check timezone & NTP Time sync**
@@ -104,6 +104,22 @@ Sep 05 02:27:09 node-mon01 systemd[1]: podman.service: Deactivated successfully.
 ```
 # python3 -V
 Python 3.10.12
+```
+
+**Check disk device**
+```
+# lsblk 
+NAME     MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+loop0      7:0    0 27.6M  1 loop /snap/amazon-ssm-agent/11797
+loop1      7:1    0 63.8M  1 loop /snap/core20/2599
+loop2      7:2    0 73.9M  1 loop /snap/core22/2045
+loop3      7:3    0 89.4M  1 loop /snap/lxd/31333
+loop4      7:4    0 49.3M  1 loop /snap/snapd/24792
+xvda     202:0    0   20G  0 disk 
+├─xvda1  202:1    0 19.9G  0 part /
+├─xvda14 202:14   0    4M  0 part 
+└─xvda15 202:15   0  106M  0 part /boot/efi
+xvdb     202:16   0   50G  0 disk
 ```
 
 **Install cephadm**
