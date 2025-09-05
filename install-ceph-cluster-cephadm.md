@@ -222,3 +222,11 @@ root@node-mon01:~# ceph -s
     usage:   0 B used, 0 B / 0 B avail
     pgs:
 ```
+
+**Deploying additional monitors**
+```
+# ceph config set mon public_network *<mon-cidr-network>*
+
+Example:
+ceph config set mon public_network 172.31.0.0/16
+```
