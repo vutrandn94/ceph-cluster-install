@@ -228,5 +228,5 @@ root@node-mon01:~# ceph -s
 # ceph config set mon public_network *<mon-cidr-network>*
 
 Example:
-ceph config set mon public_network 172.31.0.0/16
+root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
 ```
