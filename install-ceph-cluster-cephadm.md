@@ -254,6 +254,11 @@ Example:
 root@node-mon01:~# ceph config set mon public_network 172.31.0.0/16
 ```
 
+**Copy cluster’s public SSH key in the new host’s root user’s authorized_keys**
+```
+
+```
+
 **Adding Hosts join to cluster**
 ```
 # ceph orch host label add *<host>* --labels <label>
