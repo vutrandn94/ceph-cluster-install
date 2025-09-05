@@ -10,11 +10,11 @@
 
 
 ## Lab info (6 servers - 5 mon + osd, 1 osd)
-| Hostname | IP Address | OS | Role | Label |
-| :--- | :--- | :--- | :--- | :--- |
-| node-mon01 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin |
-| node-mon02 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin |
-| node-mon03 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin |
-| node-mon04 |  | Ubuntu 22.04.5 LTS | mon, osd | |
-| node-mon05 |  | Ubuntu 22.04.5 LTS | mon, osd | |
-| node-osd01  |  | Ubuntu 22.04.5 LTS | osd | |
+| Hostname | IP Address | OS | Role | Label | Disk Device Storage Data |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| node-mon01 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
+| node-mon02 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
+| node-mon03 |  | Ubuntu 22.04.5 LTS | mon, osd, mgr | _admin | /dev/xvdb |
+| node-mon04 |  | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
+| node-mon05 |  | Ubuntu 22.04.5 LTS | mon, osd | | /dev/xvdb |
+| node-osd01  |  | Ubuntu 22.04.5 LTS | osd | | /dev/xvdb |
