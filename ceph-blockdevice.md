@@ -148,14 +148,19 @@ bash: /ceph-rbd-test/rbd-pool-ro/test.txt: Read-only file system
 ```
 
 ## Config auto map device and automount device after server booted
+> [!NOTE]
+> If config map with block device pool with read-only permission on /etc/ceph/rbdmap , you should added "options='ro'"
+
 ```
 root@ceph-client:/etc/ceph# cat /etc/ceph/rbdmap 
 # RbdDevice		Parameters
 #poolname/imagename	id=client,keyring=/etc/ceph/ceph.client.keyring
 rbd-pool/data id=rdp-pool-rw,keyring=/etc/ceph/ceph.keyring
+rbd-pool-db/data id=rdp-pool-ro,keyring=/etc/ceph/ceph.keyring,options='ro'
 
 root@ceph-client:/etc/ceph# vi /etc/fstab 
 /dev/rbd/rbd-pool/data /ceph-rbd-test/rbd-pool-rw xfs defaults,_netdev 0 0
+/dev/rbd/rbd-pool-db/data /ceph-rbd-test/rbd-pool-ro xfs defaults,_netdev,ro 0 0
 ```
 
 > [!NOTE]
