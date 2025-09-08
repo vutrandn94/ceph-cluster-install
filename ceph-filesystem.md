@@ -1,5 +1,6 @@
 # Deploy Ceph Filesystem
 *https://docs.ceph.com/en/latest/cephadm/services/mds/#orchestrator-cli-cephfs*
+*https://docs.ceph.com/en/latest/cephfs/client-auth/*
 
 ## Create file system volume
 ```
