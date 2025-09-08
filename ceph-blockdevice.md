@@ -20,7 +20,6 @@ root@node-mon01:~# rbd pool init rbd-pool
 | Client name | Caps | Permissions |   
 | :--- | :--- |  :--- | 
 | rdp-pool-rw | caps mgr = "profile rbd pool=rbd-pool"<br>caps mon = "profile rbd"<br>caps osd = "profile rbd pool=rbd-pool" | Allow read & write to pool "rbd-pool" and allow client interact RBD features (snapshot, clone,...) |
-| :--- | :--- |  :--- | 
 | rdp-pool-ro | caps mgr = "profile rbd-read-only pool=rbd-pool"<br>caps mon = "profile rbd"<br>caps osd = "profile rbd-read-only pool=rbd-pool" | Allow read only to pool "rbd-pool" and RBD features (snapshot, clone,...) |
 
 ```
