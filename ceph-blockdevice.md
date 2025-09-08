@@ -5,7 +5,7 @@
 
 ```
 # ceph osd pool create <pool_name>
-# ceph osd pool application enable <pool_name> <application>
+# ceph osd pool application enable <pool_name> rbd
 # rbd pool init <pool_name>
 
 Example: 
