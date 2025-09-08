@@ -58,6 +58,7 @@ root@node-mon01:~# ceph auth get client.rdp-pool-ro
 
 Example:
 root@node-mon01:~# rbd create --size 10240 rbd-pool/data        # image "data" with 10GB quota
+root@node-mon01:~# rbd create --size 51200 rbd-pool-db/data        # image "data" with 50GB quota
 ```
 
 ## Map RBD image, format and mount to client
@@ -88,13 +89,23 @@ root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
 ```
 
 **Map RBD image, format block device and mount**
+> [!NOTE]
+> If map with block device pool with read-only permission. You should added option "--read-only"
+
+> [!NOTE]
+> Before mount read-only device, you should format device type first (Hint: Mapping to 1 mon server to format with mkfs command) and mount added option "-o ro"
+
 ```
-root@ceph-client:~# rbd map data --pool rbd-pool --name client.rdp-pool-rw
+root@ceph-client:/home/ubuntu# rbd map data --pool rbd-pool --name client.rdp-pool-rw
 /dev/rbd0
 
+root@ceph-client:/home/ubuntu# rbd map data --pool rbd-pool-db --name client.rdp-pool-ro --read-only
+/dev/rbd1
+
 root@ceph-client:/home/ubuntu# rbd showmapped
-id  pool      namespace  image  snap  device   
-0   rbd-pool             data   -     /dev/rbd0
+id  pool         namespace  image  snap  device   
+0   rbd-pool                data   -     /dev/rbd0
+1   rbd-pool-db             data   -     /dev/rbd1
 
 root@ceph-client:~# mkfs.xfs /dev/rbd0
 meta-data=/dev/rbd0              isize=512    agcount=16, agsize=163840 blks
@@ -111,17 +122,29 @@ Discarding blocks...Done.
 
 root@ceph-client:~# mount /dev/rbd0 /ceph-rbd-test/rbd-pool-rw
 
+root@ceph-client:/home/ubuntu# mount -o ro /dev/rbd1 /ceph-rbd-test/rbd-pool-ro
+
 root@ceph-client:~# mount | grep /dev/rbd0
 /dev/rbd0 on /ceph-rbd-test/rbd-pool-rw type xfs (rw,relatime,attr2,inode64,logbufs=8,logbsize=64k,sunit=128,swidth=128,noquota)
+
+root@ceph-client:/home/ubuntu# mount | grep /dev/rbd1
+/dev/rbd1 on /ceph-rbd-test/rbd-pool-ro type xfs (ro,relatime,attr2,inode64,logbufs=8,logbsize=64k,sunit=128,swidth=128,noquota)
 
 root@ceph-client:~# df -h /dev/rbd0
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/rbd0        10G  105M  9.9G   2% /ceph-rbd-test/rbd-pool-rw
 
+root@ceph-client:/home/ubuntu# df -h /dev/rbd1
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/rbd1        50G  928K   50G   1% /ceph-rbd-test/rbd-pool-ro
+
 root@ceph-client:~# echo "123" > /ceph-rbd-test/rbd-pool-rw/test.txt
 
 root@ceph-client:~# cat /ceph-rbd-test/rbd-pool-rw/test.txt
 123
+
+root@ceph-client:/home/ubuntu# echo "123" > /ceph-rbd-test/rbd-pool-ro/test.txt
+bash: /ceph-rbd-test/rbd-pool-ro/test.txt: Read-only file system
 ```
 
 ## Config auto map device and automount device after server booted
