@@ -114,3 +114,11 @@ root@ceph-client:~# echo "123" > /ceph-rbd-test/rbd-pool-rw/test.txt
 root@ceph-client:~# cat /ceph-rbd-test/rbd-pool-rw/test.txt
 123
 ```
+
+## Config auto map device and automount device after server booted
+```
+root@ceph-client:/etc/ceph# cat /etc/ceph/rbdmap 
+# RbdDevice		Parameters
+#poolname/imagename	id=client,keyring=/etc/ceph/ceph.client.keyring
+rbd-pool/data id=rbd-pool-rw,keyring=/etc/ceph/ceph.keyring
+```
