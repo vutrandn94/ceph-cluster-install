@@ -86,6 +86,10 @@ root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
 root@ceph-client:~# rbd map data --pool rbd-pool --name client.rdp-pool-rw
 /dev/rbd0
 
+root@ceph-client:/home/ubuntu# rbd showmapped
+id  pool      namespace  image  snap  device   
+0   rbd-pool             data   -     /dev/rbd0
+
 root@ceph-client:~# mkfs.xfs /dev/rbd0
 meta-data=/dev/rbd0              isize=512    agcount=16, agsize=163840 blks
          =                       sectsz=512   attr=2, projid32bit=1
