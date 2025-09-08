@@ -89,10 +89,10 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 ## Mount filesystem for client and start storage data
 https://docs.ceph.com/en/latest/man/8/mount.ceph/
 
-| Mount point | client |   
-| :--- | :--- |
-| /ceph-fs001-test/admin-auth | admin-fs001 |
-| /ceph-fs001-test/membem-auth | member-fs001 |
+| Mount Point| Mount Path | Client Auth |   
+| :--- | :--- | :--- |
+| / | /ceph-fs001-test/admin-auth | admin-fs001 |
+| /log | /ceph-fs001-test/membem-auth | member-fs001 |
 
 **Install ceph-common**
 ```
