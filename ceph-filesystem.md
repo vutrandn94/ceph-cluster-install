@@ -102,22 +102,59 @@ root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ce
 ```
 
 **Config ceph authorize**
+> [TIP]
+> use command "ceph auth get-key <client user>" to get secret key. Example: "ceph auth get-key client.admin-fs001"
 
 ```
+--- Get content of file "/etc/ceph/ceph.conf" on 1 mon server node and paste to "/etc/ceph/ceph.conf" on client server or copy file to that ---
 root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.conf
 [global]
 	fsid = b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
 	mon_host = [v2:172.31.24.155:3300/0,v1:172.31.24.155:6789/0] [v2:172.31.29.146:3300/0,v1:172.31.29.146:6789/0] [v2:172.31.17.150:3300/0,v1:172.31.17.150:6789/0] [v2:172.31.24.21:3300/0,v1:172.31.24.21:6789/0] [v2:172.31.17.124:3300/0,v1:172.31.17.124:6789/0]
 
+--- Define client authorize infomation ---
 root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
 [client.admin-fs001]
 	key = AQBrOr5oXVG4DhAAWII0Ujw8Q8orCp0BbttURQ==
-	caps mds = "allow rw fsname=fs-001"
-	caps mon = "allow r fsname=fs-001"
-	caps osd = "allow rw tag cephfs data=fs-001"
 [client.member-fs001]
 	key = AQCKPb5oosFnLxAAINRLh2UdsyVtp8E8v1ksuQ==
-	caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"
-	caps mon = "allow r fsname=fs-001"
-	caps osd = "allow rw tag cephfs data=fs-001"
+```
+
+**Test mount and verify**
+```
+root@ceph-client:~# mount -t ceph :/ /ceph-fs001-test/admin-auth -o name=admin-fs001
+
+root@ceph-client:~# mkdir /ceph-fs001-test/admin-auth/log
+
+root@ceph-client:~# mount -t ceph :/log /ceph-fs001-test/membem-auth/ -o name=member-fs001
+
+root@ceph-client:~# mount | grep "ceph-fs001"
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/ on /ceph-fs001-test/admin-auth type ceph (rw,relatime,name=admin-fs001,secret=<hidden>,fsid=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba,acl)
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/log on /ceph-fs001-test/membem-auth type ceph (rw,relatime,name=member-fs001,secret=<hidden>,fsid=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba,acl)
+
+root@ceph-client:~# df -h
+Filesystem                                                                                          Size  Used Avail Use% Mounted on
+/dev/root                                                                                            15G  2.6G   12G  18% /
+tmpfs                                                                                               2.0G     0  2.0G   0% /dev/shm
+tmpfs                                                                                               783M  860K  782M   1% /run
+tmpfs                                                                                               5.0M     0  5.0M   0% /run/lock
+/dev/xvda15                                                                                         105M  6.1M   99M   6% /boot/efi
+tmpfs                                                                                               392M  4.0K  392M   1% /run/user/1000
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/      95G     0   95G   0% /ceph-fs001-test/admin-auth
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/log   95G     0   95G   0% /ceph-fs001-test/membem-auth
+
+root@ceph-client:~# echo "12345" > /ceph-fs001-test/membem-auth/abc.txt
+
+root@ceph-client:~# cat /ceph-fs001-test/membem-auth/abc.txt
+12345
+
+root@ceph-client:~# ls /ceph-fs001-test/admin-auth -la
+total 4
+drwxr-xr-x 4 root root    2 Sep  8 03:37 .
+drwxr-xr-x 4 root root 4096 Sep  8 02:34 ..
+drwxr-xr-x 2 root root    1 Sep  8 03:39 log
+drwxr-xr-x 3 root root    2 Sep  8 03:04 volumes
+
+root@ceph-client:~# ls /ceph-fs001-test/admin-auth/log/
+abc.txt
 ```
