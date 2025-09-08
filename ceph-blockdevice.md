@@ -120,5 +120,8 @@ root@ceph-client:~# cat /ceph-rbd-test/rbd-pool-rw/test.txt
 root@ceph-client:/etc/ceph# cat /etc/ceph/rbdmap 
 # RbdDevice		Parameters
 #poolname/imagename	id=client,keyring=/etc/ceph/ceph.client.keyring
-rbd-pool/data id=rbd-pool-rw,keyring=/etc/ceph/ceph.keyring
+rbd-pool/data id=rdp-pool-rw,keyring=/etc/ceph/ceph.keyring
+
+root@ceph-client:/etc/ceph# vi /etc/fstab 
+/dev/rbd/rbd-pool/data /ceph-rbd-test/rbd-pool-rw xfs defaults,_netdev 0 0
 ```
