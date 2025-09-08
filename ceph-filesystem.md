@@ -159,3 +159,5 @@ drwxr-xr-x 3 root root    2 Sep  8 03:04 volumes
 root@ceph-client:~# ls /ceph-fs001-test/admin-auth/data/
 abc.txt
 ```
+
+## Mount subvolume for client and start storage data
