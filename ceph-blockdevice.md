@@ -10,9 +10,15 @@
 
 Example: 
 root@node-mon01:~# ceph osd pool create rbd-pool
+pool 'rbd-pool' created
 root@node-mon01:~# ceph osd pool application enable rbd-pool rbd
 enabled application 'rbd' on pool 'rbd-pool'
 root@node-mon01:~# rbd pool init rbd-pool
+root@node-mon01:~# ceph osd pool create rbd-pool-db
+pool 'rbd-pool-db' created
+root@node-mon01:~# ceph osd pool application enable rbd-pool-db rbd
+enabled application 'rbd' on pool 'rbd-pool-db'
+root@node-mon01:~# rbd pool init rbd-pool-db
 ```
 
 ## Create a Block Device User
@@ -20,16 +26,16 @@ root@node-mon01:~# rbd pool init rbd-pool
 | Client name | Caps | Permissions |   
 | :--- | :--- |  :--- | 
 | rdp-pool-rw | caps mgr = "profile rbd pool=rbd-pool"<br>caps mon = "profile rbd"<br>caps osd = "profile rbd pool=rbd-pool" | Allow read & write to pool "rbd-pool" and allow client interact RBD features (snapshot, clone,...) |
-| rdp-pool-ro | caps mgr = "profile rbd-read-only pool=rbd-pool"<br>caps mon = "profile rbd"<br>caps osd = "profile rbd-read-only pool=rbd-pool" | Allow read only to pool "rbd-pool" and RBD features (snapshot, clone,...) |
+| rdp-pool-ro | caps mgr = "profile rbd-read-only pool=rbd-pool-db"<br>caps mon = "profile rbd"<br>caps osd = "profile rbd-read-only pool=rbd-pool-db" | Allow read only to pool "rbd-pool-db" and RBD features (snapshot, clone,...) |
 
 ```
 root@node-mon01:~# ceph auth get-or-create client.rdp-pool-rw mon 'profile rbd' osd 'profile rbd pool=rbd-pool' mgr 'profile rbd pool=rbd-pool'
 [client.rdp-pool-rw]
 	key = AQCmib5oM4V1HxAAY9iJAysipnBHFa/dfRYGWA==
 
-root@node-mon01:~# ceph auth get-or-create client.rdp-pool-ro mon 'profile rbd' osd 'profile rbd-read-only pool=rbd-pool' mgr 'profile rbd-read-only pool=rbd-pool'
+root@node-mon01:~# ceph auth get-or-create client.rdp-pool-ro mon 'profile rbd' osd 'profile rbd-read-only pool=rbd-pool-db' mgr 'profile rbd-read-only pool=rbd-pool-db'
 [client.rdp-pool-ro]
-	key = AQDTi75oHibGKRAA2JDrl4r2xGoohKEnrsCskg==
+	key = AQCImb5onhurCBAAlxzSsAE0PCbjzfPAQ3KPQw==
 
 root@node-mon01:~# ceph auth get client.rdp-pool-rw
 [client.rdp-pool-rw]
@@ -40,10 +46,10 @@ root@node-mon01:~# ceph auth get client.rdp-pool-rw
 
 root@node-mon01:~# ceph auth get client.rdp-pool-ro
 [client.rdp-pool-ro]
-	key = AQDTi75oHibGKRAA2JDrl4r2xGoohKEnrsCskg==
-	caps mgr = "profile rbd-read-only pool=rbd-pool"
+	key = AQCImb5onhurCBAAlxzSsAE0PCbjzfPAQ3KPQw==
+	caps mgr = "profile rbd-read-only pool=rbd-pool-db"
 	caps mon = "profile rbd"
-	caps osd = "profile rbd-read-only pool=rbd-pool"
+	caps osd = "profile rbd-read-only pool=rbd-pool-db"
 ```
 
 ## Create a Block Device Image
@@ -78,7 +84,7 @@ root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
 [client.rdp-pool-rw]
 	key =  AQCmib5oM4V1HxAAY9iJAysipnBHFa/dfRYGWA==
 [client.rdp-pool-ro]
-	key = AQDTi75oHibGKRAA2JDrl4r2xGoohKEnrsCskg==
+	key =  AQCImb5onhurCBAAlxzSsAE0PCbjzfPAQ3KPQw==
 ```
 
 **Map RBD image, format block device and mount**
