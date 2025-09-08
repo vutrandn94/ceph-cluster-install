@@ -400,7 +400,7 @@ node-mon05  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileS
 node-osd01  /dev/xvdb  ssd              50.0G  No         6m ago     Has a FileSystem, Insufficient space (<10 extents) on vgs, LVM detected 
 ```
 ## Deploy MDS daemons (CephFS)
-**Defind and apply MDS daemon
+**Defind and apply MDS daemon**
 ```
 root@node-mon01:/home/ubuntu# vi mds-daemon.yaml
 ---
