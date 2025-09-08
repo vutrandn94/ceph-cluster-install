@@ -87,6 +87,8 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 	caps osd = "allow rw tag cephfs data=fs-001"
 ```
 ## Mount filesystem for client and start storage data
+https://docs.ceph.com/en/latest/man/8/mount.ceph/
+
 | Mount point | client |   
 | :--- | :--- |
 | /ceph-fs001-test/admin-auth | admin-fs001 |
@@ -97,7 +99,6 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 root@ceph-client:/home/ubuntu# apt-get update
 root@ceph-client:/home/ubuntu# apt-get install ceph-common
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs001-test/{admin-auth,membem-auth}
-root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs002-test/{admin-auth,membem-auth}
 root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ceph/ceph.keyring
 ```
 
