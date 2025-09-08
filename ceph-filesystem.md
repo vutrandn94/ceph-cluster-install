@@ -87,6 +87,9 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 	caps osd = "allow rw tag cephfs data=fs-001"
 ```
 ## Mount filesystem for client and start storage data
+| Mount point | client |   
+| :--- | :--- |
+|||
 **Install ceph-common**
 ```
 root@ceph-client:/home/ubuntu# apt-get update
