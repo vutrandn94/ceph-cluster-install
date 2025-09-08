@@ -242,3 +242,11 @@ root@ceph-client:~# echo "Cheer..." > /ceph-fs001-test/log-auth/test.txt
 root@ceph-client:~# cat /ceph-fs001-test/log-auth/test.txt
 Cheer...
 ```
+
+## Config /etc/fstab file to automount CephFS after server booted
+```
+root@ceph-client:/home/ubuntu# vi /etc/fstab
+:/  /ceph-fs001-test/admin-auth  ceph  name=admin-fs001,_netdev  0  0
+:/data /ceph-fs001-test/membem-auth ceph  name=member-fs001,_netdev  0  0
+:/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9 /ceph-fs001-test/log-auth ceph  name=log-fs001,_netdev  0  0
+```
