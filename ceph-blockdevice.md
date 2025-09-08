@@ -19,6 +19,6 @@ root@node-mon01:~# rbd pool init rbd-pool
 ```
 # rbd create --size {megabytes} {pool-name}/{image-name}
 
-Example: 
-root@node-mon01:~# rbd create --size 10240 rbd-pool/data
+Example:
+root@node-mon01:~# rbd create --size 10240 rbd-pool/data        # image "data" with 10GB quota
 ```
