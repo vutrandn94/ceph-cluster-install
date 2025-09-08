@@ -75,14 +75,14 @@ root@node-mon01:/etc/ceph# ceph auth get client.admin-fs001
 
 | Client name | Caps | Permissions |   
 | :--- | :--- |  :--- | 
-| member-fs001 | caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Only full permission for path "/log" in fs fs-001 |
+| member-fs001 | caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/data"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Only full permission for path "/log" in fs fs-001 |
 ```
 root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.member-fs001 / r /log rw
 
 root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 [client.member-fs001]
 	key = AQCKPb5oosFnLxAAINRLh2UdsyVtp8E8v1ksuQ==
-	caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"
+	caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/data"
 	caps mon = "allow r fsname=fs-001"
 	caps osd = "allow rw tag cephfs data=fs-001"
 ```
@@ -92,7 +92,7 @@ https://docs.ceph.com/en/latest/man/8/mount.ceph/
 | Mount Point| Mount Path | Client Auth |   
 | :--- | :--- | :--- |
 | / | /ceph-fs001-test/admin-auth | admin-fs001 |
-| /log | /ceph-fs001-test/membem-auth | member-fs001 |
+| /data | /ceph-fs001-test/membem-auth | member-fs001 |
 
 **Install ceph-common**
 ```
@@ -125,24 +125,24 @@ root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
 ```
 root@ceph-client:~# mount -t ceph :/ /ceph-fs001-test/admin-auth -o name=admin-fs001
 
-root@ceph-client:~# mkdir /ceph-fs001-test/admin-auth/log
+root@ceph-client:~# mkdir /ceph-fs001-test/admin-auth/data
 
-root@ceph-client:~# mount -t ceph :/log /ceph-fs001-test/membem-auth/ -o name=member-fs001
+root@ceph-client:~# mount -t ceph :/data /ceph-fs001-test/membem-auth/ -o name=member-fs001
 
 root@ceph-client:~# mount | grep "ceph-fs001"
 172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/ on /ceph-fs001-test/admin-auth type ceph (rw,relatime,name=admin-fs001,secret=<hidden>,fsid=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba,acl)
-172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/log on /ceph-fs001-test/membem-auth type ceph (rw,relatime,name=member-fs001,secret=<hidden>,fsid=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba,acl)
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/data on /ceph-fs001-test/membem-auth type ceph (rw,relatime,name=member-fs001,secret=<hidden>,fsid=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba,acl)
 
 root@ceph-client:~# df -h
-Filesystem                                                                                          Size  Used Avail Use% Mounted on
-/dev/root                                                                                            15G  2.6G   12G  18% /
-tmpfs                                                                                               2.0G     0  2.0G   0% /dev/shm
-tmpfs                                                                                               783M  860K  782M   1% /run
-tmpfs                                                                                               5.0M     0  5.0M   0% /run/lock
-/dev/xvda15                                                                                         105M  6.1M   99M   6% /boot/efi
-tmpfs                                                                                               392M  4.0K  392M   1% /run/user/1000
-172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/      95G     0   95G   0% /ceph-fs001-test/admin-auth
-172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/log   95G     0   95G   0% /ceph-fs001-test/membem-auth
+Filesystem                                                                                           Size  Used Avail Use% Mounted on
+/dev/root                                                                                             15G  2.6G   12G  18% /
+tmpfs                                                                                                2.0G     0  2.0G   0% /dev/shm
+tmpfs                                                                                                783M  868K  782M   1% /run
+tmpfs                                                                                                5.0M     0  5.0M   0% /run/lock
+/dev/xvda15                                                                                          105M  6.1M   99M   6% /boot/efi
+tmpfs                                                                                                392M  4.0K  392M   1% /run/user/1000
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/       95G     0   95G   0% /ceph-fs001-test/admin-auth
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/data   95G     0   95G   0% /ceph-fs001-test/membem-auth
 
 root@ceph-client:~# echo "12345" > /ceph-fs001-test/membem-auth/abc.txt
 
@@ -151,11 +151,11 @@ root@ceph-client:~# cat /ceph-fs001-test/membem-auth/abc.txt
 
 root@ceph-client:~# ls /ceph-fs001-test/admin-auth -la
 total 4
-drwxr-xr-x 4 root root    2 Sep  8 03:37 .
+drwxr-xr-x 4 root root    2 Sep  8 03:58 .
 drwxr-xr-x 4 root root 4096 Sep  8 02:34 ..
-drwxr-xr-x 2 root root    1 Sep  8 03:39 log
+drwxr-xr-x 2 root root    0 Sep  8 03:58 data
 drwxr-xr-x 3 root root    2 Sep  8 03:04 volumes
 
-root@ceph-client:~# ls /ceph-fs001-test/admin-auth/log/
+root@ceph-client:~# ls /ceph-fs001-test/admin-auth/data/
 abc.txt
 ```
