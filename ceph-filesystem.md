@@ -202,3 +202,39 @@ abc.txt
 | Sub Volume Mount Point| Mount Path | Client Auth |   
 | :--- | :--- | :--- |
 | /volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9 | /ceph-fs001-test/log-auth | log-fs001 |
+
+**Install ceph-common**
+```
+root@ceph-client:/home/ubuntu# apt-get update
+root@ceph-client:/home/ubuntu# apt-get install ceph-common
+root@ceph-client:/home/ubuntu# mkdir /ceph-fs001-test/log-auth
+root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ceph/ceph.keyring
+```
+
+**Config ceph authorize**
+> [!NOTE]
+> Use command "ceph auth get-key <client user>" to get secret key. Example: "ceph auth get-key client.admin-fs001"
+```
+--- Get content of file "/etc/ceph/ceph.conf" on 1 mon server node and paste to "/etc/ceph/ceph.conf" on client server or copy file to that ---
+root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.conf
+[global]
+	fsid = b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+	mon_host = [v2:172.31.24.155:3300/0,v1:172.31.24.155:6789/0] [v2:172.31.29.146:3300/0,v1:172.31.29.146:6789/0] [v2:172.31.17.150:3300/0,v1:172.31.17.150:6789/0] [v2:172.31.24.21:3300/0,v1:172.31.24.21:6789/0] [v2:172.31.17.124:3300/0,v1:172.31.17.124:6789/0]
+
+--- Define client authorize infomation ---
+root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
+[client.log-fs001]
+	key = AQB8Wb5owPSrJhAAr7h4lK0/e6g/HvHVcujbJg==
+```
+
+**Test mount and verify**
+```
+root@ceph-client:~# mount -t ceph :/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9 /ceph-fs001-test/log-auth/ -o name=log-fs001
+
+root@ceph-client:~# mount | grep "log-auth"
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9 on /ceph-fs001-test/log-auth type ceph (rw,relatime,name=log-fs001,secret=<hidden>,fsid=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba,acl)
+
+root@ceph-client:~# df -h /ceph-fs001-test/log-auth
+Filesystem                                                                                                                                                Size  Used Avail Use% Mounted on
+172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9  5.0G     0  5.0G   0% /ceph-fs001-test/log-auth
+```
