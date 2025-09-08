@@ -1,8 +1,6 @@
 # Deploy Ceph Filesystem
 *https://docs.ceph.com/en/latest/cephadm/services/mds/#orchestrator-cli-cephfs*
 
-*https://docs.ceph.com/en/latest/cephfs/client-auth/*
-
 ## Create file system volume
 ```
 # ceph fs volume create <fs_name> --placement="<placement spec>"
@@ -58,6 +56,8 @@ root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 214748
 ![Alt Text](ceph-fs3.png)
 
 ## Create authorize client restriction
+*https://docs.ceph.com/en/latest/cephfs/client-auth/*
+
 **Create authorize client restriction for fs-001**
 | Client name | caps | role |   
 | :--- | :--- |  :--- | 
