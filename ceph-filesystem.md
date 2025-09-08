@@ -61,7 +61,7 @@ root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 214748
 **Create authorize client restriction for fs-001**
 | Client name | Caps | Permissons |   
 | :--- | :--- |  :--- | 
-| admin-fs001 | caps mds = "allow rw fsname=fs-001"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Full perm for fs-001 |
+| admin-fs001 | caps mds = "allow rw fsname=fs-001"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Full permission for fs-001 |
 ```
 root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.admin-fs001 / rw -o client.admin-fs001.keyring
 
@@ -98,10 +98,26 @@ root@ceph-client:/home/ubuntu# apt-get update
 root@ceph-client:/home/ubuntu# apt-get install ceph-common
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs001-test/{admin-auth,membem-auth}
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs002-test/{admin-auth,membem-auth}
+root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ceph/ceph.keyring
 ```
 
 **Config ceph authorize**
 
 ```
+root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.conf
+[global]
+	fsid = b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+	mon_host = [v2:172.31.24.155:3300/0,v1:172.31.24.155:6789/0] [v2:172.31.29.146:3300/0,v1:172.31.29.146:6789/0] [v2:172.31.17.150:3300/0,v1:172.31.17.150:6789/0] [v2:172.31.24.21:3300/0,v1:172.31.24.21:6789/0] [v2:172.31.17.124:3300/0,v1:172.31.17.124:6789/0]
 
+root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
+[client.admin-fs001]
+	key = AQBrOr5oXVG4DhAAWII0Ujw8Q8orCp0BbttURQ==
+	caps mds = "allow rw fsname=fs-001"
+	caps mon = "allow r fsname=fs-001"
+	caps osd = "allow rw tag cephfs data=fs-001"
+[client.member-fs001]
+	key = AQCKPb5oosFnLxAAINRLh2UdsyVtp8E8v1ksuQ==
+	caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"
+	caps mon = "allow r fsname=fs-001"
+	caps osd = "allow rw tag cephfs data=fs-001"
 ```
