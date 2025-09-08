@@ -57,6 +57,16 @@ root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 214748
 ![Alt Text](ceph-fs2.png)
 ![Alt Text](ceph-fs3.png)
 
+## Create authorize client restriction
+**Create authorize client restriction for fs-001**
+| Client name | caps | role |   
+| :--- | :--- |  :--- | 
+| admin-fs001 | caps mds = "allow rw fsname=fs-001"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | admin |
+
+```
+root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.admin-fs001 / rw -o client.admin-fs001.keyring
+```
+
 ## Mount filesystem for client and start storage data
 **Install ceph-common**
 ```
