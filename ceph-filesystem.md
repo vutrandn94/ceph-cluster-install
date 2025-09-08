@@ -102,8 +102,8 @@ root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ce
 ```
 
 **Config ceph authorize**
-> [TIP]
-> use command "ceph auth get-key <client user>" to get secret key. Example: "ceph auth get-key client.admin-fs001"
+> [NOTE]
+> Use command "ceph auth get-key <client user>" to get secret key. Example: "ceph auth get-key client.admin-fs001"
 
 ```
 --- Get content of file "/etc/ceph/ceph.conf" on 1 mon server node and paste to "/etc/ceph/ceph.conf" on client server or copy file to that ---
