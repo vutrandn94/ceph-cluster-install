@@ -113,7 +113,7 @@ root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ce
 ```
 
 **Config ceph authorize**
-> [NOTE]
+> [!NOTE]
 > Use command "ceph auth get-key <client user>" to get secret key. Example: "ceph auth get-key client.admin-fs001"
 
 ```
@@ -171,7 +171,7 @@ abc.txt
 ```
 
 ## Mount subvolume for client and start storage data
-> [NOTE]
+> [!NOTE]
 > Use command "ceph fs subvolume getpath <fs name> <subvolume name>" to get Sub volume mount point  . Example: "ceph fs subvolume getpath fs-001 log"
 | Sub Volume Mount Point| Mount Path | Client Auth |   
 | :--- | :--- | :--- |
