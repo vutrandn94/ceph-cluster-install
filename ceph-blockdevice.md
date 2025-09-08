@@ -82,7 +82,7 @@ root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
 	key = AQDTi75oHibGKRAA2JDrl4r2xGoohKEnrsCskg==
 ```
 
-**Map RBD image**
+**Map RBD image, format block device and mount**
 ```
 root@ceph-client:~# rbd map data --pool rbd-pool --name client.rdp-pool-rw
 /dev/rbd0
