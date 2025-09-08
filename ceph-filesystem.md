@@ -171,3 +171,6 @@ abc.txt
 ```
 
 ## Mount subvolume for client and start storage data
+| Sub Volume Mount Point| Mount Path | Client Auth |   
+| :--- | :--- | :--- |
+| /volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9 | /ceph-fs001-test/log-auth | log-fs001 |
