@@ -54,3 +54,63 @@ root@node-mon01:~# ceph auth get client.rdp-pool-ro
 Example:
 root@node-mon01:~# rbd create --size 10240 rbd-pool/data        # image "data" with 10GB quota
 ```
+
+## Map RBD image, format and mount to client
+**Install ceph-common**
+```
+root@ceph-client:/home/ubuntu# apt-get update
+root@ceph-client:/home/ubuntu# apt-get install ceph-common
+root@ceph-client:/home/ubuntu# mkdir -p /ceph-rbd-test/{rbd-pool-rw,rbd-pool-ro}
+root@ceph-client:/home/ubuntu# touch /etc/ceph/ceph.keyring && chmod 600 /etc/ceph/ceph.keyring
+```
+
+**Config ceph authorize**
+> [!NOTE]
+> Use command "ceph auth get-key <client user>" to get secret key. Example: "ceph auth get-key client.admin-fs001"
+```
+--- Get content of file "/etc/ceph/ceph.conf" on 1 mon server node and paste to "/etc/ceph/ceph.conf" on client server or copy file to that ---
+root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.conf
+[global]
+	fsid = b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+	mon_host = [v2:172.31.24.155:3300/0,v1:172.31.24.155:6789/0] [v2:172.31.29.146:3300/0,v1:172.31.29.146:6789/0] [v2:172.31.17.150:3300/0,v1:172.31.17.150:6789/0] [v2:172.31.24.21:3300/0,v1:172.31.24.21:6789/0] [v2:172.31.17.124:3300/0,v1:172.31.17.124:6789/0]
+
+--- Define client authorize infomation ---
+root@ceph-client:/home/ubuntu# vi /etc/ceph/ceph.keyring
+[client.rdp-pool-rw]
+	key =  AQCmib5oM4V1HxAAY9iJAysipnBHFa/dfRYGWA==
+[client.rdp-pool-ro]
+	key = AQDTi75oHibGKRAA2JDrl4r2xGoohKEnrsCskg==
+```
+
+**Map RBD image**
+```
+root@ceph-client:~# rbd map data --pool rbd-pool --name client.rdp-pool-rw
+/dev/rbd0
+
+root@ceph-client:~# mkfs.xfs /dev/rbd0
+meta-data=/dev/rbd0              isize=512    agcount=16, agsize=163840 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=0 inobtcount=0
+data     =                       bsize=4096   blocks=2621440, imaxpct=25
+         =                       sunit=16     swidth=16 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=16 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+Discarding blocks...Done.
+
+root@ceph-client:~# mount /dev/rbd0 /ceph-rbd-test/rbd-pool-rw
+
+root@ceph-client:~# mount | grep /dev/rbd0
+/dev/rbd0 on /ceph-rbd-test/rbd-pool-rw type xfs (rw,relatime,attr2,inode64,logbufs=8,logbsize=64k,sunit=128,swidth=128,noquota)
+
+root@ceph-client:~# df -h /dev/rbd0
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/rbd0        10G  105M  9.9G   2% /ceph-rbd-test/rbd-pool-rw
+
+root@ceph-client:~# echo "123" > /ceph-rbd-test/rbd-pool-rw/test.txt
+
+root@ceph-client:~# cat /ceph-rbd-test/rbd-pool-rw/test.txt
+123
+```
