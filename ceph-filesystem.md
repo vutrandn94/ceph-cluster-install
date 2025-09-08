@@ -59,9 +59,9 @@ root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 214748
 *https://docs.ceph.com/en/latest/cephfs/client-auth/*
 
 **Create authorize client restriction for fs-001**
-| Client name | caps | role |   
+| Client name | Caps | Permissons |   
 | :--- | :--- |  :--- | 
-| admin-fs001 | caps mds = "allow rw fsname=fs-001"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | admin |
+| admin-fs001 | caps mds = "allow rw fsname=fs-001"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Full perm for fs-001 |
 ```
 root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.admin-fs001 / rw -o client.admin-fs001.keyring
 
@@ -73,9 +73,9 @@ root@node-mon01:/etc/ceph# ceph auth get client.admin-fs001
 	caps osd = "allow rw tag cephfs data=fs-001"
 ```
 
-| Client name | caps | role |   
+| Client name | Caps | Permissions |   
 | :--- | :--- |  :--- | 
-| member-fs001 | caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | member |
+| member-fs001 | caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Only full permission for path "/log" in fs fs-001 |
 ```
 root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.member-fs001 / r /log rw
 
@@ -98,4 +98,10 @@ root@ceph-client:/home/ubuntu# apt-get update
 root@ceph-client:/home/ubuntu# apt-get install ceph-common
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs001-test/{admin-auth,membem-auth}
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs002-test/{admin-auth,membem-auth}
+```
+
+**Config ceph authorize**
+
+```
+
 ```
