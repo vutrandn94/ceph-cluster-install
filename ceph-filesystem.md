@@ -91,6 +91,7 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 | :--- | :--- |
 | /ceph-fs001-test/admin-auth | admin-fs001 |
 | /ceph-fs001-test/membem-auth | member-fs001 |
+
 **Install ceph-common**
 ```
 root@ceph-client:/home/ubuntu# apt-get update
