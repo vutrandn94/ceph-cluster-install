@@ -25,6 +25,10 @@ node-exporter              ?:9100           6/6  67s ago    6h    *
 osd.all-available-devices                     6  67s ago    106m  *                                 
 prometheus                 ?:9095           1/1  65s ago    6h    count:1
 
+root@node-mon01:/home/ubuntu# ceph fs ls
+name: fs-001, metadata pool: cephfs.fs-001.meta, data pools: [cephfs.fs-001.data ]
+name: fs-002, metadata pool: cephfs.fs-002.meta, data pools: [cephfs.fs-002.data ]
+
 root@node-mon01:/home/ubuntu# ceph fs volume ls
 [
     {
@@ -35,6 +39,7 @@ root@node-mon01:/home/ubuntu# ceph fs volume ls
     }
 ]
 ```
+
 ![Alt Text](ceph-fs1.png)
 
 ## Create file system subvolume and set quota limit size storage
