@@ -96,6 +96,21 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 	caps mon = "allow r fsname=fs-001"
 	caps osd = "allow rw tag cephfs data=fs-001"
 ```
+
+| Client name | Caps | Permissions |   
+| :--- | :--- |  :--- | 
+| log-fs001 | caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | Only full permission for path "/log" in fs fs-001 |
+```
+root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.log-fs001 / r /volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9 rw
+
+root@node-mon01:/etc/ceph# ceph auth get client.log-fs001
+[client.log-fs001]
+	key = AQB8Wb5owPSrJhAAr7h4lK0/e6g/HvHVcujbJg==
+	caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9"
+	caps mon = "allow r fsname=fs-001"
+	caps osd = "allow rw tag cephfs data=fs-001"
+```
+
 ## Mount filesystem for client and start storage data
 https://docs.ceph.com/en/latest/man/8/mount.ceph/
 
