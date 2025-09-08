@@ -91,4 +91,5 @@ root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
 ```
 root@ceph-client:/home/ubuntu# apt-get update
 root@ceph-client:/home/ubuntu# apt-get install ceph-common
+root@ceph-client:/home/ubuntu# mkdir -p /ceph-fs-test/{admin-auth,membem-auth}
 ```
