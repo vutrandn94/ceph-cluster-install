@@ -125,3 +125,6 @@ rbd-pool/data id=rdp-pool-rw,keyring=/etc/ceph/ceph.keyring
 root@ceph-client:/etc/ceph# vi /etc/fstab 
 /dev/rbd/rbd-pool/data /ceph-rbd-test/rbd-pool-rw xfs defaults,_netdev 0 0
 ```
+
+> [!NOTE]
+> Check systemd service "rbdmap" if device map error. "systemctl status rbdmap"
