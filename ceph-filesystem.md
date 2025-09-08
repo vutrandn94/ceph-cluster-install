@@ -237,4 +237,8 @@ root@ceph-client:~# mount | grep "log-auth"
 root@ceph-client:~# df -h /ceph-fs001-test/log-auth
 Filesystem                                                                                                                                                Size  Used Avail Use% Mounted on
 172.31.17.124:6789,172.31.17.150:6789,172.31.24.21:6789,172.31.24.155:6789,172.31.29.146:6789:/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9  5.0G     0  5.0G   0% /ceph-fs001-test/log-auth
+
+root@ceph-client:~# echo "Cheer..." > /ceph-fs001-test/log-auth/test.txt
+root@ceph-client:~# cat /ceph-fs001-test/log-auth/test.txt
+Cheer...
 ```
