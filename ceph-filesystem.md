@@ -51,6 +51,16 @@ root@node-mon01:/home/ubuntu# ceph fs volume ls
 Example:
 root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-001 log --size 5368709120
 root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 21474836480
+
+root@node-mon01:/home/ubuntu# ceph fs subvolume ls fs-001
+[
+    {
+        "name": "log"
+    }
+]
+
+root@node-mon01:/etc/ceph# ceph fs subvolume getpath fs-001 log
+/volumes/_nogroup/log/73811be7-8d08-424b-8600-0ad8d18baad9
 ```
 ![Alt Text](ceph-fs2.png)
 ![Alt Text](ceph-fs3.png)
