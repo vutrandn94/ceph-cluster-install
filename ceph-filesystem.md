@@ -62,11 +62,27 @@ root@node-mon01:/home/ubuntu# ceph fs subvolume create fs-002 data --size 214748
 | Client name | caps | role |   
 | :--- | :--- |  :--- | 
 | admin-fs001 | caps mds = "allow rw fsname=fs-001"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | admin |
-
 ```
 root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.admin-fs001 / rw -o client.admin-fs001.keyring
+root@node-mon01:/etc/ceph# ceph auth get client.admin-fs001
+[client.admin-fs001]
+	key = AQBrOr5oXVG4DhAAWII0Ujw8Q8orCp0BbttURQ==
+	caps mds = "allow rw fsname=fs-001"
+	caps mon = "allow r fsname=fs-001"
+	caps osd = "allow rw tag cephfs data=fs-001"
 ```
-
+| Client name | caps | role |   
+| :--- | :--- |  :--- | 
+| member-fs001 | caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"<br>caps mon = "allow r fsname=fs-001"<br>caps osd = "allow rw tag cephfs data=fs-001" | member |
+```
+root@node-mon01:/etc/ceph# ceph fs authorize fs-001 client.member-fs001 / r /log rw
+root@node-mon01:/etc/ceph# ceph auth get client.member-fs001
+[client.member-fs001]
+	key = AQCKPb5oosFnLxAAINRLh2UdsyVtp8E8v1ksuQ==
+	caps mds = "allow r fsname=fs-001, allow rw fsname=fs-001 path=/log"
+	caps mon = "allow r fsname=fs-001"
+	caps osd = "allow rw tag cephfs data=fs-001"
+```
 ## Mount filesystem for client and start storage data
 **Install ceph-common**
 ```
