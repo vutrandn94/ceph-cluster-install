@@ -58,7 +58,7 @@ Example:
 root@node-mon01:~# ceph nfs cluster ls
 main
 
-root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path /app/data --fsname fs-nfs --path=/volumes/_nogroup/data/14c272f4-0ff3-4ec0-ab63-2671d1bba955 --client_addr 172.31.24.187
+root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path /app/data --fsname fs-nfs --path=/volumes/_nogroup/data/14c272f4-0ff3-4ec0-ab63-2671d1bba955 --client_addr 172.31.24.187,172.31.25.57
 {
     "bind": "/app/data",
     "fs": "fs-nfs",
@@ -67,13 +67,68 @@ root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path
     "mode": "none"
 }
 
-root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path /app/log --fsname fs-nfs --path=/volumes/_nogroup/log/a463769d-4a4c-4896-8199-628bc9e77f66 --client_addr 172.31.24.187
+root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path /app/log --fsname fs-nfs --path=/volumes/_nogroup/log/a463769d-4a4c-4896-8199-628bc9e77f66
 {
     "bind": "/app/log",
     "fs": "fs-nfs",
     "path": "/volumes/_nogroup/log/a463769d-4a4c-4896-8199-628bc9e77f66",
     "cluster": "main",
-    "mode": "none"
+    "mode": "RW"
+}
+
+root@node-mon01:~# ceph nfs export get main /app/data
+{
+  "export_id": 1,
+  "path": "/volumes/_nogroup/data/14c272f4-0ff3-4ec0-ab63-2671d1bba955",
+  "cluster_id": "main",
+  "pseudo": "/app/data",
+  "access_type": "none",
+  "squash": "none",
+  "security_label": true,
+  "protocols": [
+    4
+  ],
+  "transports": [
+    "TCP"
+  ],
+  "fsal": {
+    "name": "CEPH",
+    "user_id": "nfs.main.1",
+    "fs_name": "fs-nfs"
+  },
+  "clients": [
+    {
+      "addresses": [
+        "172.31.24.187",
+        "172.31.25.57"
+      ],
+      "access_type": "rw",
+      "squash": "none"
+    }
+  ]
+}
+
+root@node-mon01:~# ceph nfs export get main /app/log
+{
+  "export_id": 2,
+  "path": "/volumes/_nogroup/log/a463769d-4a4c-4896-8199-628bc9e77f66",
+  "cluster_id": "main",
+  "pseudo": "/app/log",
+  "access_type": "RW",
+  "squash": "none",
+  "security_label": true,
+  "protocols": [
+    4
+  ],
+  "transports": [
+    "TCP"
+  ],
+  "fsal": {
+    "name": "CEPH",
+    "user_id": "nfs.main.2",
+    "fs_name": "fs-nfs"
+  },
+  "clients": []
 }
 ```
 ![Alt Text](ceph-nfs-1.png)
