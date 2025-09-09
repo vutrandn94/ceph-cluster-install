@@ -136,7 +136,7 @@ root@node-mon01:~# ceph nfs export get main /app/log
 ## Mount NFS for client and start storage data
 *https://docs.ceph.com/en/latest/cephfs/nfs/#cephfs-nfs*
 > [!TIP]
-> <ganesha-host-name> using to mount NFS exactly IP of 1 mon node
+> Using 1 Hostname / IP of 1 mon node to mount with client
 
 ```
 root@ceph-client:/home/ubuntu# apt install nfs-common -y
