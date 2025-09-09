@@ -82,6 +82,8 @@ root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path
 > **<ganesha-host-name>** using to mount NFS exactly IP of 1 mon node
 
 ```
+root@ceph-client:/home/ubuntu# apt install nfs-common -y
+
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-nfs-test/{log,data}
 
 root@ceph-client:/home/ubuntu# mount -t nfs -o nfsvers=4.1,proto=tcp 172.31.24.155:/app/data /ceph-nfs-test/data/
