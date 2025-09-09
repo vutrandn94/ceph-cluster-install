@@ -49,6 +49,8 @@ root@node-mon01:~# ceph fs subvolume getpath fs-nfs log
 ```
 *https://docs.ceph.com/en/latest/mgr/nfs/#mgr-nfs*
 
+> [!NOTE]
+> Create nfs export with option "--client_addr" is limit only IPs specified can mount. If without use option "--client_addr", by default all clients can access the export according to specified export permissions
 
 ```
 Example:
@@ -79,7 +81,7 @@ root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path
 ## Mount NFS for client and start storage data
 *https://docs.ceph.com/en/latest/cephfs/nfs/#cephfs-nfs*
 > [!TIP]
-> **<ganesha-host-name>** using to mount NFS exactly IP of 1 mon node
+> <ganesha-host-name> using to mount NFS exactly IP of 1 mon node
 
 ```
 root@ceph-client:/home/ubuntu# apt install nfs-common -y
