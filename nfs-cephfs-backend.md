@@ -27,7 +27,7 @@ nfs.main             6/6  14s ago    10m  *
 ```
 
 ## Create CephFS Backend for NFS
-**Example create cephfs "fs-nfs" and 2 subvolume "data" and "log"
+**Example create cephfs "fs-nfs" and 2 subvolume "data" and "log"**
 ```
 root@node-mon01:~# ceph fs volume create fs-nfs --placement="*"
 
