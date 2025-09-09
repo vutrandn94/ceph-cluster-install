@@ -77,6 +77,10 @@ root@node-mon01:~# ceph nfs export create cephfs --cluster-id main --pseudo-path
 ![Alt Text](ceph-nfs-1.png)
 
 ## Mount NFS for client and start storage data
+*https://docs.ceph.com/en/latest/cephfs/nfs/#cephfs-nfs*
+> [!TIP]
+> **<ganesha-host-name>** using to mount NFS exactly IP of 1 mon node
+
 ```
 root@ceph-client:/home/ubuntu# mkdir -p /ceph-nfs-test/{log,data}
 
