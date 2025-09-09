@@ -110,10 +110,18 @@ root@ceph-client:/home/ubuntu# echo "123456" > /ceph-nfs-test/data/test.txt
 root@ceph-client:/home/ubuntu# cat /ceph-nfs-test/data/test.txt
 123456
 
-root@ceph-client:/home/ubuntu# touch abc.log /ceph-nfs-test/log
+root@ceph-client:/home/ubuntu# touch /ceph-nfs-test/log/abc.log
 
 root@ceph-client:/home/ubuntu# ls -la /ceph-nfs-test/log
 total 4
-drwxr-xr-x 2 root root    0 Sep  9 02:31 .
+drwxr-xr-x 2 root root    0 Sep  9 02:41 .
 drwxr-xr-x 4 root root 4096 Sep  9 02:23 ..
+-rw-r--r-- 1 root root    0 Sep  9 02:41 abc.log
+```
+
+## Config /etc/fstab file to automount CephFS after server booted
+```
+root@ceph-client:/home/ubuntu# vi /etc/fstab
+172.31.24.155:/app/data   /ceph-nfs-test/data   nfs   nfsvers=4.1,proto=tcp,_netdev   0 0
+172.31.24.155:/app/log   /ceph-nfs-test/log   nfs   nfsvers=4.1,proto=tcp,_netdev   0 0
 ```
