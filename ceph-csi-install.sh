@@ -1,6 +1,6 @@
 #!/bin/bash
-# Author: VuTD
-# Last modified: 14:34 10/09/2025 (UTC +7)
+## Author: VuTD
+## Last modified: 14:34 10/09/2025 (UTC +7)
 
 ## DEFINE ENV
 CLUSTER_ID='b0c8c6be-8a07-11f0-8f49-7b896d8c3aba'
