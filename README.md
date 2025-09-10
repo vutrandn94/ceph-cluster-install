@@ -9,3 +9,4 @@
 | Create and use Ceph Filesystem (CephFS) | [ceph-filesystem.md](https://github.com/vutrandn94/ceph-cluster-install/blob/main/ceph-filesystem.md) |
 | Create and use Ceph Block Device | [ceph-blockdevice.md](https://github.com/vutrandn94/ceph-cluster-install/blob/main/ceph-blockdevice.md) |
 | Create NFS with CephFS Backend | [nfs-cephfs-backend.md](https://github.com/vutrandn94/ceph-cluster-install/blob/main/nfs-cephfs-backend.md)
+| Integrate CEPH-CSI with K8S | [integrate-ceph-csi-k8s.md](https://github.com/vutrandn94/ceph-cluster-install/blob/main/integrate-ceph-csi-k8s.md) |
