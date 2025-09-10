@@ -129,6 +129,10 @@ ceph-csi-rbd   rbd.csi.ceph.com   Delete          Immediate           true      
 ```
 
 ## Test create PersistentVolumeClaim (PVC) with ceph-csi storageclass and mount to workload
+> [!NOTE]
+> If delete PersistentVolumeClaim (PVC) created with ceph-csi storageclass. Ceph Block Images volumes will too delete
+
+**Test with "volumeMode: Filesystem"**
 ```
 root@k8s-master01:/usr/local/src/ceph-csi-manifest# cat <<EOF | kubectl apply -f -
 apiVersion: v1
@@ -207,3 +211,84 @@ Source:
 Events:                <none>
 ```
 ![Alt Text](integrate-k8s-1.png)
+
+**Test with "volumeMode: Block"**
+```
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: raw-block-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ceph-csi-rbd
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-raw-block-volume
+  namespace: default
+spec:
+  containers:
+    - name: fc-container
+      image: fedora:26
+      command: ["/bin/sh", "-c"]
+      args: ["tail -f /dev/null"]
+      volumeDevices:
+        - name: data
+          devicePath: /dev/xvdb
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: raw-block-pvc
+EOF
+
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# kubectl get pod pod-with-raw-block-volume -n default
+NAME                        READY   STATUS    RESTARTS   AGE
+pod-with-raw-block-volume   1/1     Running   0          59s
+
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# kubectl get pvc raw-block-pvc -n default
+NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+raw-block-pvc   Bound    pvc-2fe194c3-4541-415f-839c-5e38f1a682ec   5Gi        RWO            ceph-csi-rbd   <unset>                 76s
+
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# kubectl get pv pvc-2fe194c3-4541-415f-839c-5e38f1a682ec -n default
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                   STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+pvc-2fe194c3-4541-415f-839c-5e38f1a682ec   5Gi        RWO            Delete           Bound    default/raw-block-pvc   ceph-csi-rbd   <unset>                          88s
+
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# kubectl describe pv pvc-2fe194c3-4541-415f-839c-5e38f1a682ec -n default
+Name:            pvc-2fe194c3-4541-415f-839c-5e38f1a682ec
+Labels:          <none>
+Annotations:     pv.kubernetes.io/provisioned-by: rbd.csi.ceph.com
+                 volume.kubernetes.io/provisioner-deletion-secret-name: csi-rbd-secret
+                 volume.kubernetes.io/provisioner-deletion-secret-namespace: default
+Finalizers:      [external-provisioner.volume.kubernetes.io/finalizer kubernetes.io/pv-protection external-attacher/rbd-csi-ceph-com]
+StorageClass:    ceph-csi-rbd
+Status:          Bound
+Claim:           default/raw-block-pvc
+Reclaim Policy:  Delete
+Access Modes:    RWO
+VolumeMode:      Block
+Capacity:        5Gi
+Node Affinity:   <none>
+Message:         
+Source:
+    Type:              CSI (a Container Storage Interface (CSI) volume source)
+    Driver:            rbd.csi.ceph.com
+    FSType:            
+    VolumeHandle:      0001-0024-b0c8c6be-8a07-11f0-8f49-7b896d8c3aba-000000000000001b-44c4d8d3-2441-40f3-8d35-9c0b0e0445c1
+    ReadOnly:          false
+    VolumeAttributes:      clusterID=b0c8c6be-8a07-11f0-8f49-7b896d8c3aba
+                           imageFeatures=layering
+                           imageName=csi-vol-44c4d8d3-2441-40f3-8d35-9c0b0e0445c1
+                           journalPool=kubernetes
+                           pool=kubernetes
+                           storage.kubernetes.io/csiProvisionerIdentity=1757487492782-4977-rbd.csi.ceph.com
+Events:                <none>
+```
+![Alt Text](integrate-k8s-2.png)
