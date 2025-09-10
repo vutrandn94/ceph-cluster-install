@@ -36,3 +36,9 @@ dumped monmap epoch 5
 ```
 
 ## Generate ceph-csi manifest and auto deploy (Perform in k8s client)
+```
+root@k8s-master01:~# mkdir -p /usr/local/src/ceph-csi-manifest; cd /usr/local/src/ceph-csi-manifest
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# wget https://raw.githubusercontent.com/vutrandn94/ceph-cluster-install/refs/heads/main/ceph-csi-install.sh
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# chmod +x ceph-csi-install.sh
+root@k8s-master01:/usr/local/src/ceph-csi-manifest# ./ceph-csi-install.sh
+```
