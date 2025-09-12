@@ -75,7 +75,7 @@ DefaultTasksMax=65000
 
 **Install Podman**
 ```
-# apt-get update && apt-get install -y podman
+# apt-get update && apt-get install -y podman lvm2
 
 # systemctl status podman
 ○ podman.service - Podman API Service
